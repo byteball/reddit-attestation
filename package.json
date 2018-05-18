@@ -1,0 +1,35 @@
+{
+  "name": "byteball-reddit-bot",
+  "version": "1.0.0",
+  "description": "A bot for attestation of reddit users",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/temikng/byteball-reddit-bot.git"
+  },
+  "keywords": [
+    "byteball",
+    "reddit",
+    "bot"
+  ],
+  "author": "temikng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/temikng/byteball-reddit-bot/issues"
+  },
+  "homepage": "https://github.com/temikng/byteball-reddit-bot#readme",
+  "dependencies": {
+    "byteball-witness": "git+https://github.com/byteball/byteball-witness.git",
+    "byteballcore": "git+https://github.com/byteball/byteballcore.git",
+    "emailjs": "1.0.10",
+    "express": "4.16.3",
+    "headless-byteball": "git+https://github.com/byteball/headless-byteball.git",
+    "http-status-codes": "1.3.0",
+    "passport": "0.4.0",
+    "passport-reddit": "0.2.4",
+    "request": "2.85.0"
+  }
+}
