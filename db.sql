@@ -1,6 +1,6 @@
 CREATE TABLE reddit_users (
 	reddit_user_id CHAR(32) NOT NULL PRIMARY KEY,
-	reddit_name CHAR(255) NOT NULL,
+	reddit_username CHAR(255) NOT NULL,
 	reddit_karma INTEGER NOT NULL,
 	reddit_created TIMESTAMP NOT NULL,
 	creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

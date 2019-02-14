@@ -72,7 +72,7 @@ app.get('/auth/callback', (req, res, next) => {
 							if (!rows.length) {
 								return db.query(
 									`INSERT INTO reddit_users
-									(reddit_user_id, reddit_name, reddit_karma, reddit_created)
+									(reddit_user_id, reddit_username, reddit_karma, reddit_created)
 									VALUES(?,?,?,?)`,
 									[user.id, user.name, userKarma, userCreated],
 									(res) => {

@@ -146,7 +146,7 @@ function getUserId(profile){
 
 function getAttestationPayloadAndSrcProfile(user_address, data, bPublic) {
 	let profile = {
-		name: data.reddit_name,
+		reddit_username: data.reddit_username,
 		karma: data.reddit_karma,
 		created: data.reddit_created
 	};
