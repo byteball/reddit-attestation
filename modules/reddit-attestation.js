@@ -140,8 +140,11 @@ function postAttestation(attestor_address, payload, onDone) {
 	composer.composeJoint(params);
 }
 
-function getUserId(profile){
-	return objectHash.getBase64Hash([profile, conf.salt]);
+function getUserId(profile) {
+	const shortProfile = {
+		reddit_username: profile.reddit_username,
+	};
+	return objectHash.getBase64Hash([shortProfile, conf.salt]);
 }
 
 function getAttestationPayloadAndSrcProfile(user_address, data, bPublic) {
