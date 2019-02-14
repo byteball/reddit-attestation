@@ -140,8 +140,11 @@ function postAttestation(attestor_address, payload, onDone) {
 	composer.composeJoint(params);
 }
 
-function getUserId(profile){
-	return objectHash.getBase64Hash([profile, conf.salt]);
+function getProfileId(profile) {
+	const shortProfile = {
+		reddit_username: profile.reddit_username,
+	};
+	return objectHash.getBase64Hash([shortProfile, conf.salt]);
 }
 
 function getAttestationPayloadAndSrcProfile(user_address, data, bPublic) {
@@ -151,7 +154,7 @@ function getAttestationPayloadAndSrcProfile(user_address, data, bPublic) {
 		created: data.reddit_created
 	};
 	if (bPublic) {
-		profile.user_id = getUserId(profile);
+		profile.user_id = getProfileId(profile);
 		let attestation = {
 			address: user_address,
 			profile: profile
@@ -182,7 +185,7 @@ function hideProfile(profile) {
 		src_profile[field] = [value, blinding];
 	}
 	let profile_hash = objectHash.getBase64Hash(hidden_profile);
-	let user_id = getUserId(profile);
+	let user_id = getProfileId(profile);
 	let public_profile = {
 		profile_hash: profile_hash,
 		user_id: user_id
