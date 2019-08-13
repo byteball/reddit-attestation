@@ -1,5 +1,5 @@
 {
-  "name": "byteball-reddit-bot",
+  "name": "reddit-attestation",
   "version": "1.0.0",
   "description": "A bot for attestation of reddit users",
   "main": "index.js",
@@ -8,25 +8,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/temikng/byteball-reddit-bot.git"
+    "url": "git+https://github.com/byteball/reddit-attestation.git"
   },
   "keywords": [
     "byteball",
+    "obyte",
     "reddit",
+    "attestation",
     "bot"
   ],
   "author": "temikng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/temikng/byteball-reddit-bot/issues"
+    "url": "https://github.com/byteball/reddit-attestation/issues"
   },
-  "homepage": "https://github.com/temikng/byteball-reddit-bot#readme",
+  "homepage": "https://github.com/byteball/reddit-attestation#readme",
   "dependencies": {
-    "byteball-witness": "git+https://github.com/byteball/byteball-witness.git",
-    "byteballcore": "git+https://github.com/byteball/byteballcore.git",
-    "emailjs": "1.0.10",
+    "obyte-witness": "git+https://github.com/byteball/obyte-witness.git",
+    "ocore": "git+https://github.com/byteball/ocore.git",
     "express": "4.16.3",
-    "headless-byteball": "git+https://github.com/byteball/headless-byteball.git",
+    "headless-obyte": "git+https://github.com/byteball/headless-obyte.git",
     "http-status-codes": "1.3.0",
     "passport": "0.4.0",
     "passport-reddit": "0.2.4",

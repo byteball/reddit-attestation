@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
-const desktopApp = require('byteballcore/desktop_app.js');
-const conf = require('byteballcore/conf');
+const desktopApp = require('ocore/desktop_app.js');
+const conf = require('ocore/conf');
 
 /**
  * responses for clients
@@ -120,7 +120,7 @@ exports.attestedSuccessFirstTimeBonus = (rewardInUSD, rewardInBytes) => {
 		"You requested an attestation for the first time and will receive a welcome bonus ",
 		`of $${rewardInUSD.toLocaleString([], {minimumFractionDigits: 2})} `,
 		`(${(rewardInBytes/1e9).toLocaleString([], {maximumFractionDigits: 9})} GB) `,
-		"from Byteball distribution fund."
+		"from Obyte distribution fund."
 	].join('');
 };
 
@@ -129,8 +129,8 @@ exports.referredUserBonus = (referralRewardInUSD, referralRewardInBytes) => {
 		"You referred a user who has just verified his identity and you will receive a reward ",
 		`of $${referralRewardInUSD.toLocaleString([], {minimumFractionDigits: 2})} `,
 		`(${(referralRewardInBytes/1e9).toLocaleString([], {maximumFractionDigits: 9})} GB) `,
-		"from Byteball distribution fund.\n",
-		"Thank you for bringing in a new byteballer, the value of the ecosystem grows with each new user!"
+		"from Obyte distribution fund.\n",
+		"Thank you for bringing in a new Obbie, the value of the ecosystem grows with each new user!"
 	].join('');
 };
 
@@ -151,10 +151,6 @@ exports.previousAttestationFailed = () => {
  */
 exports.errorInitSql = () => {
 	return "please import db.sql file\n";
-};
-
-exports.errorConfigSmtp = () => {
-	return `please specify smtpUser, smtpPassword and smtpHost in your ${desktopApp.getAppDataDir()}/conf.json\n`;
 };
 
 exports.errorConfigEmail = () => {

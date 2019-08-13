@@ -5,9 +5,9 @@ const express = require('express');
 const HttpStatus = require('http-status-codes');
 const passport = require('passport');
 const RedditStrategy = require('passport-reddit').Strategy;
-const db = require('byteballcore/db');
-const mutex = require('byteballcore/mutex.js');
-const conf = require('byteballcore/conf.js');
+const db = require('ocore/db');
+const mutex = require('ocore/mutex.js');
+const conf = require('ocore/conf.js');
 const texts = require('./texts');
 const notifications = require('./notifications');
 const redditData = require('./reddit-data');
@@ -104,7 +104,7 @@ app.get('/auth/callback', (req, res, next) => {
 			const userCreated = new Date(user._json.created_utc * 1000);
 			const userKarma = user.link_karma + user.comment_karma;
 
-			const device = require('byteballcore/device.js');
+			const device = require('ocore/device.js');
 			checkAndGetRedditUserId()
 				.then(({reddit_user_id, status}) => {
 					res.send(`Received grant access to your Reddit account: ${user.name}`).end();

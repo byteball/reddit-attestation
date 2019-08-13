@@ -1,6 +1,6 @@
 
-const conf = require('byteballcore/conf');
-const db = require('byteballcore/db');
+const conf = require('ocore/conf');
+const db = require('ocore/db');
 
 /**
  * get reddit user data by reddit_user_id
