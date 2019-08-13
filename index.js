@@ -1,12 +1,12 @@
 /*jslint node: true */
 'use strict';
-const constants = require('byteballcore/constants.js');
-const conf = require('byteballcore/conf');
-const db = require('byteballcore/db');
-const eventBus = require('byteballcore/event_bus.js');
+const constants = require('ocore/constants.js');
+const conf = require('ocore/conf');
+const db = require('ocore/db');
+const eventBus = require('ocore/event_bus.js');
 const texts = require('./modules/texts.js');
-const validationUtils = require('byteballcore/validation_utils');
-const headlessWallet = require('headless-byteball');
+const validationUtils = require('ocore/validation_utils');
+const headlessWallet = require('headless-obyte');
 const notifications = require('./modules/notifications');
 const conversion = require('./modules/conversion.js');
 const redditAttestation = require('./modules/reddit-attestation.js');
@@ -39,7 +39,7 @@ process.on('unhandledRejection', (err) => {
 
 function handleHeadlessAndRatesReady() {
 	if (conf.bRunWitness) {
-		require('byteball-witness');
+		require('obyte-witness');
 		eventBus.emit('headless_wallet_ready');
 	} else {
 		headlessWallet.setupChatEventHandlers();
@@ -82,9 +82,6 @@ function handleWalletReady() {
 		/**
 		 * check if config is filled correct
 		 */
-		if (conf.bUseSmtp && (!conf.smtpHost || !conf.smtpUser || !conf.smtpPassword)) {
-			error += texts.errorConfigSmtp();
-		}
 		if (!conf.admin_email || !conf.from_email) {
 			error += texts.errorConfigEmail();
 		}
@@ -117,7 +114,7 @@ function handleWalletReady() {
 }
 
 function moveFundsToAttestorAddresses() {
-	let network = require('byteballcore/network.js');
+	let network = require('ocore/network.js');
 	if (network.isCatchingUp())
 		return;
 
@@ -138,7 +135,7 @@ function moveFundsToAttestorAddresses() {
 
 			const arrAddresses = rows.map(row => row.receiving_address);
 			// console.error(arrAddresses, redditAttestation.redditAttestorAddress);
-			const headlessWallet = require('headless-byteball');
+			const headlessWallet = require('headless-obyte');
 			headlessWallet.sendMultiPayment({
 				asset: null,
 				to_address: redditAttestation.redditAttestorAddress,
@@ -147,7 +144,7 @@ function moveFundsToAttestorAddresses() {
 			}, (err, unit) => {
 				if (err) {
 					console.error("failed to move funds: " + err);
-					let balances = require('byteballcore/balances');
+					let balances = require('ocore/balances');
 					balances.readBalance(arrAddresses[0], (balance) => {
 						console.error('balance', balance);
 						notifications.notifyAdmin('failed to move funds', err + ", balance: " + JSON.stringify(balance));
@@ -161,7 +158,7 @@ function moveFundsToAttestorAddresses() {
 }
 
 function handleNewTransactions(arrUnits) {
-	const device = require('byteballcore/device.js');
+	const device = require('ocore/device.js');
 	db.query(
 		`SELECT
 			amount, asset, unit,
@@ -238,7 +235,7 @@ function checkPayment(row, onDone) {
 }
 
 function handleTransactionsBecameStable(arrUnits) {
-	const device = require('byteballcore/device.js');
+	const device = require('ocore/device.js');
 	db.query(
 		`SELECT 
 			transaction_id, payment_unit,
@@ -361,8 +358,8 @@ function handleTransactionsBecameStable(arrUnits) {
  * @param {string} response
  */
 function respond(from_address, text, response = '') {
-	const device = require('byteballcore/device.js');
-	const mutex = require('byteballcore/mutex.js');
+	const device = require('ocore/device.js');
+	const mutex = require('ocore/mutex.js');
 	readUserInfo(from_address, (userInfo) => {
 
 		if (!userInfo.reddit_user_id) {
@@ -525,7 +522,7 @@ function readUserInfo(device_address, callback) {
  */
 function readOrAssignReceivingAddress(device_address, userInfo) {
 	return new Promise((resolve, reject) => {
-		const mutex = require('byteballcore/mutex.js');
+		const mutex = require('ocore/mutex.js');
 		mutex.lock([device_address], (unlock) => {
 			db.query(
 				`SELECT receiving_address, post_publicly, ${db.getUnixTimestamp('last_price_date')} AS price_ts

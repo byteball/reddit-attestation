@@ -1,8 +1,8 @@
 /*jslint node: true */
 'use strict';
-const conf = require('byteballcore/conf');
-const objectHash = require('byteballcore/object_hash.js');
-const db = require('byteballcore/db');
+const conf = require('ocore/conf');
+const objectHash = require('ocore/object_hash.js');
+const db = require('ocore/db');
 const notifications = require('./notifications');
 const texts = require('./texts');
 const redditData = require('./reddit-data');
@@ -35,7 +35,7 @@ function retryPostingAttestations() {
 
 function postAndWriteAttestation(transaction_id, attestor_address, attestation_payload, src_profile, callback) {
 	if (!callback) callback = function () {};
-	const mutex = require('byteballcore/mutex.js');
+	const mutex = require('ocore/mutex.js');
 	mutex.lock(['tx-'+transaction_id], (unlock) => {
 		db.query(
 			`SELECT device_address, attestation_date
@@ -63,8 +63,8 @@ function postAndWriteAttestation(transaction_id, attestor_address, attestation_p
 						WHERE transaction_id=?`,
 						[unit, transaction_id],
 						() => {
-							let device = require('byteballcore/device.js');
-							let text = "Now your Reddit account is attested, see the attestation unit: https://explorer.byteball.org/#"+unit;
+							let device = require('ocore/device.js');
+							let text = "Now your Reddit account is attested, see the attestation unit: https://explorer.obyte.org/#"+unit;
 
 							if (src_profile) {
 								let private_profile = {
@@ -92,7 +92,7 @@ function postAndWriteAttestation(transaction_id, attestor_address, attestation_p
 function postAttestation(attestor_address, payload, onDone) {
 	function onError(err) {
 		console.error("attestation failed: " + err);
-		let balances = require('byteballcore/balances');
+		let balances = require('ocore/balances');
 		balances.readBalance(attestor_address, (balance) => {
 			console.error('balance', balance);
 			notifications.notifyAdmin('attestation failed', err + ", balance: " + JSON.stringify(balance));
@@ -100,9 +100,9 @@ function postAttestation(attestor_address, payload, onDone) {
 		onDone(err);
 	}
 
-	let network = require('byteballcore/network.js');
-	let composer = require('byteballcore/composer.js');
-	let headlessWallet = require('headless-byteball');
+	let network = require('ocore/network.js');
+	let composer = require('ocore/composer.js');
+	let headlessWallet = require('headless-obyte');
 	let objMessage = {
 		app: "attestation",
 		payload_location: "inline",
@@ -168,7 +168,7 @@ function getAttestationPayloadAndSrcProfile(user_address, data, bPublic) {
 }
 
 function hideProfile(profile) {
-	let composer = require('byteballcore/composer.js');
+	let composer = require('ocore/composer.js');
 	let hidden_profile = {};
 	let src_profile = {};
 
