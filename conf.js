@@ -40,6 +40,7 @@ exports.THRESHOLD_DISTANCE = 20;
 exports.MIN_AVAILABLE_WITNESSINGS = 100;
 
 exports.priceInBytes = 3000;
+exports.bAcceptUnconfirmedPayments = false;
 
 // set this in conf.json
 exports.salt = null;

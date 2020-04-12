@@ -196,7 +196,11 @@ function handleNewTransactions(arrUnits) {
 						VALUES (?,?,?,?)`,
 						[row.receiving_address, row.price, row.amount, row.unit],
 						() => {
-							device.sendMessageToDevice(row.device_address, 'text', texts.receivedYourPayment(row.amount));
+							if (conf.bAcceptUnconfirmedPayments) {
+								handleTransactionsBecameStable([row.unit]);
+							}
+							else
+								device.sendMessageToDevice(row.device_address, 'text', texts.receivedYourPayment(row.amount));
 						}
 					);
 
@@ -243,7 +247,7 @@ function handleTransactionsBecameStable(arrUnits) {
 			reddit_user_id, post_publicly
 		FROM transactions
 		JOIN receiving_addresses USING(receiving_address)
-		WHERE payment_unit IN(?)`,
+		WHERE payment_unit IN(?) AND is_confirmed=0`,
 		[arrUnits],
 		(rows) => {
 			rows.forEach((row) => {
